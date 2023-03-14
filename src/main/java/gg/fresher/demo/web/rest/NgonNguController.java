@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gg.fresher.demo.dtos.NgonNguDto;
+import gg.fresher.demo.dtos.simpleDto.NgonNguSDto;
 import gg.fresher.demo.entities.NgonNgu;
 import gg.fresher.demo.service.NgonNguService;
 import gg.fresher.demo.service.model.NgonNguModel;
@@ -41,7 +42,7 @@ public class NgonNguController {
 
     @Operation(summary = "get list of ngonngu")
     @GetMapping
-    public ResponseEntity<Paging<NgonNguDto>> getListNgonNgu(@ParameterObject Pageable pageable,
+    public ResponseEntity<Paging<NgonNguSDto>> getListNgonNgu(@ParameterObject Pageable pageable,
     		@RequestParam(name = "quocgia", defaultValue = "") String quocgia) {
         return ResponseEntity.ok().body(service.getList(pageable, quocgia));
     }

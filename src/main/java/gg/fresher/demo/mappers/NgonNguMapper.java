@@ -5,6 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import gg.fresher.demo.dtos.NgonNguDto;
+import gg.fresher.demo.dtos.simpleDto.NgonNguSDto;
 import gg.fresher.demo.entities.NgonNgu;
 import gg.fresher.demo.service.model.NgonNguModel;
 
@@ -13,7 +14,13 @@ public interface NgonNguMapper {
 	
 //	@Mapping(source = "quocGia.id", target = "quocGiaId")
     NgonNguDto toDto(NgonNgu entity);
-
+    
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "tenNgonNgu", target = "tenNgonNgu")
+    @Mapping(source = "maNgonNgu", target = "maNgonNgu")
+    @Mapping(source = "description", target = "description")
+    NgonNguSDto toSDto(NgonNgu entity);
+    
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "tenNgonNgu", target = "tenNgonNgu")
     @Mapping(source = "maNgonNgu", target = "maNgonNgu")

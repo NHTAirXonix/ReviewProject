@@ -12,7 +12,6 @@ public interface DanTocMapper {
 	
 	@Mapping(source = "quocGia.id", target = "quocGiaId")
 	@Mapping(source = "chauLuc.id", target = "chauLucId")
-	
 	DantocDto toDto(DanToc entity);
 	
     @BeanMapping(ignoreByDefault = true)

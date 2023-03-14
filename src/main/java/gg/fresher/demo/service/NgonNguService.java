@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import gg.fresher.demo.dtos.NgonNguDto;
+import gg.fresher.demo.dtos.simpleDto.NgonNguSDto;
 import gg.fresher.demo.service.model.NgonNguModel;
 import gg.fresher.demo.utils.Paging;
 
@@ -25,5 +26,5 @@ public interface NgonNguService {
      * @param pageable
      * @return
      */
-    Paging<NgonNguDto> getList(Pageable pageable, String quocgia);
+    Paging<NgonNguSDto> getList(Pageable pageable, String quocgia);
 }

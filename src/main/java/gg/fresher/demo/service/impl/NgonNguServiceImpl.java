@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import gg.fresher.demo.dtos.NgonNguDto;
+import gg.fresher.demo.dtos.simpleDto.NgonNguSDto;
 import gg.fresher.demo.entities.NgonNgu;
 import gg.fresher.demo.entities.QNgonNgu;
-import gg.fresher.demo.entities.QQuocGia;
 import gg.fresher.demo.entities.QuocGia;
 import gg.fresher.demo.entities.relationship.NgonNguQuocGia;
 import gg.fresher.demo.entities.relationship.QNgonNguQuocGia;
@@ -45,7 +45,7 @@ public class NgonNguServiceImpl implements NgonNguService {
     
     //Lấy danh sách tất cả các đối tượng chưa xoá và thoả mãn theo yêu cầu tìm kiếm
 	@Override
-	public Paging<NgonNguDto> getList(Pageable pageable, String quocgia) {
+	public Paging<NgonNguSDto> getList(Pageable pageable, String quocgia) {
 
 		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 		
@@ -60,7 +60,7 @@ public class NgonNguServiceImpl implements NgonNguService {
 				.fetch();
 		
 		List<NgonNguQuocGia> ngonNguQuocGias = queryFactory.selectFrom(qNgonNguQuocGia)
-
+				.where(qNgonNguQuocGia.quocGiaId.eq(quocGia.getId()))
 				.fetch();
 		
 		for (NgonNguQuocGia ngonNguQuocGia : ngonNguQuocGias) {
@@ -70,9 +70,8 @@ public class NgonNguServiceImpl implements NgonNguService {
 				}
 			}
 		}
-		Page<NgonNgu> pages = new PageImpl<NgonNgu>(finalList, pageable, pageable.getPageSize());
-		Page<NgonNguDto> result = pages.map(mapper::toDto);
-		return Paging.of(result);
+		Page<NgonNguSDto> pages = new PageImpl<NgonNguSDto>(converList(finalList), pageable, pageable.getPageSize());
+		return Paging.of(pages);
 	}
 	
 	//Lưu đối tượng mới vào database
@@ -144,12 +143,17 @@ public class NgonNguServiceImpl implements NgonNguService {
 		return codes.contains(code.toUpperCase());
 	}
 	
-	public List<Object> converList(List<Object> beforeList) {
-		
-		
-		
-		
-		return null;
+	public List<NgonNguSDto> converList(List<NgonNgu> beforeList) {
+		List<NgonNguSDto> dtos = new ArrayList();
+		for (NgonNgu item : beforeList) {
+			NgonNguSDto dto = new NgonNguSDto();
+			dto.setId(item.getId());
+			dto.setMaNgonNgu(item.getMaNgonNgu());
+			dto.setTenNgonNgu(item.getTenNgonNgu());
+			dto.setDescription(item.getDescription());
+			dtos.add(dto);
+		}
+		return dtos;
 	}
 	
 	// Dùng để lấy danh sách đối tượng thông qua list mã định danh đã liên kết mối quan hệ trong database 

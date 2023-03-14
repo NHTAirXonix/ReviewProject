@@ -49,6 +49,8 @@ public class DanTocController {
     		@RequestParam(name = "id", defaultValue = "") Long id) {
         return danTocService.update(model, id);
     }
+    
+    
 	    
     @Operation(summary = "Delete dantoc")
     @DeleteMapping("/delete")
