@@ -60,7 +60,7 @@ public class NgonNguServiceImpl implements NgonNguService {
 				.fetch();
 		
 		List<NgonNguQuocGia> ngonNguQuocGias = queryFactory.selectFrom(qNgonNguQuocGia)
-				.where(qNgonNguQuocGia.quocGiaId.eq(quocGia.getId()))
+
 				.fetch();
 		
 		for (NgonNguQuocGia ngonNguQuocGia : ngonNguQuocGias) {
@@ -113,6 +113,8 @@ public class NgonNguServiceImpl implements NgonNguService {
 		repository.save(ngonNgu);
 		return new ResponseEntity<>(mapper.toDto(ngonNgu),HttpStatus.OK);
 	}
+	
+	
 	
 	
 	// Xoá đối tượng trong database

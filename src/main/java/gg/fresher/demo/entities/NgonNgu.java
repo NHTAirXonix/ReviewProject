@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,5 +46,6 @@ public class NgonNgu extends AbstractAuditingEntity<Long>  {
 //    private QuocGia quocGia;
     
     @ManyToMany(mappedBy = "ngonNgus")
+    @JsonBackReference
     private List<QuocGia> quocGias = new ArrayList<>();
 }
