@@ -48,25 +48,30 @@ public class NgonNguServiceImpl implements NgonNguService {
 	public Paging<NgonNguSDto> getList(Pageable pageable, String quocgia) {
 
 		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
-		
+		quocgia=quocgia.trim();
 		QNgonNgu qNgonNgu = QNgonNgu.ngonNgu;
 		QNgonNguQuocGia qNgonNguQuocGia = QNgonNguQuocGia.ngonNguQuocGia;
 		List<NgonNgu> finalList = new ArrayList<NgonNgu>();
-
-		QuocGia quocGia = quocGiaJpaRepository.findByName(quocgia);
-		
-		List<NgonNgu> ngonNgus = queryFactory.selectFrom(qNgonNgu)
-				.where(qNgonNgu.deleted.eq(false))
-				.fetch();
-		
-		List<NgonNguQuocGia> ngonNguQuocGias = queryFactory.selectFrom(qNgonNguQuocGia)
-				.where(qNgonNguQuocGia.quocGiaId.eq(quocGia.getId()))
-				.fetch();
-		
-		for (NgonNguQuocGia ngonNguQuocGia : ngonNguQuocGias) {
-			for (NgonNgu ngonNgu : ngonNgus) {
-				if(ngonNguQuocGia.getNgonNguId()==ngonNgu.getId()) {
-					finalList.add(ngonNgu);
+		if(quocgia.equals("")) {
+			finalList = queryFactory.selectFrom(qNgonNgu)
+					.where(qNgonNgu.deleted.eq(false))
+					.fetch();
+		} else {
+			QuocGia quocGia = quocGiaJpaRepository.findByName(quocgia);
+			
+			List<NgonNgu> ngonNgus = queryFactory.selectFrom(qNgonNgu)
+					.where(qNgonNgu.deleted.eq(false))
+					.fetch();
+			
+			List<NgonNguQuocGia> ngonNguQuocGias = queryFactory.selectFrom(qNgonNguQuocGia)
+					.where(qNgonNguQuocGia.quocGiaId.eq(quocGia.getId()))
+					.fetch();
+			
+			for (NgonNguQuocGia ngonNguQuocGia : ngonNguQuocGias) {
+				for (NgonNgu ngonNgu : ngonNgus) {
+					if(ngonNguQuocGia.getNgonNguId()==ngonNgu.getId()) {
+						finalList.add(ngonNgu);
+					}
 				}
 			}
 		}
