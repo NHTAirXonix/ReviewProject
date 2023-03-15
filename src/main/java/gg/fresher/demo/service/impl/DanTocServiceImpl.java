@@ -108,4 +108,17 @@ public class DanTocServiceImpl implements DanTocService {
 			return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@Override
+	public ResponseEntity<List<Object>> detail(Long id) {
+		List<Object> list = new ArrayList<>();
+		if (danTocRepository.findById(id).isPresent()) {
+			DanToc danToc = danTocRepository.findById(id).get();
+			list.add("Lấy dữ liệu thành công");
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		} else {
+			list.add("Lấy dữ liệu không thành công");
+			return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
+		}
+	}
 }

@@ -20,6 +20,8 @@ public interface DanTocService {
 	ResponseEntity<List<Object>> update(DanTocModel model, Long id);
 	
 	ResponseEntity<List<Object>> delete(Long id);
+	
+	ResponseEntity<List<Object>> detail(Long id);
 
     /**
      * @param pageable

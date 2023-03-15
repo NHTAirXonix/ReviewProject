@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,14 +45,17 @@ public class DanTocController {
     }
 	    
     @Operation(summary = "Update dantoc")
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<List<Object>> updateDanToc(@RequestBody @Valid DanTocModel model,
     		@RequestParam(name = "id", defaultValue = "") Long id) {
         return danTocService.update(model, id);
     }
+    @Operation(summary = "Detail dantoc")
+    @GetMapping("/chitiet")
+	public ResponseEntity<List<Object>> xemChiTiet(@RequestParam(name = "id") Long id) {
+    	return danTocService.detail(id);
+    }
     
-    
-	    
     @Operation(summary = "Delete dantoc")
     @DeleteMapping("/delete")
     public ResponseEntity<List<Object>> deleteDanToc(@RequestParam(name = "id", defaultValue = "") Long id) {
