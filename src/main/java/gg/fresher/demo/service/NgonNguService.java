@@ -22,6 +22,7 @@ public interface NgonNguService {
 	
 	ResponseEntity<NgonNguDto> delete(Long id);
 
+	ResponseEntity<List<Object>> detail(Long id);
     /**
      * @param pageable
      * @return

@@ -17,6 +17,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import gg.fresher.demo.dtos.NgonNguDto;
 import gg.fresher.demo.dtos.simpleDto.NgonNguSDto;
+import gg.fresher.demo.entities.DanToc;
 import gg.fresher.demo.entities.NgonNgu;
 import gg.fresher.demo.entities.QNgonNgu;
 import gg.fresher.demo.entities.QuocGia;
@@ -118,12 +119,24 @@ public class NgonNguServiceImpl implements NgonNguService {
 		return new ResponseEntity<>(mapper.toDto(ngonNgu),HttpStatus.OK);
 	}
 	
-	
+	@Override
+	public ResponseEntity<List<Object>> detail(Long id) {
+		List<Object> list = new ArrayList<>();
+		if (repository.findById(id).isPresent()) {
+			NgonNgu ngonNgu = repository.findById(id).get();
+			list.add("Lấy dữ liệu thành công");
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		} else {
+			list.add("Lấy dữ liệu không thành công");
+			return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 	
 	// Xoá đối tượng trong database
 	@Override
 	public ResponseEntity<NgonNguDto> delete(Long id) {
+		
 		if (repository.findById(id).isPresent()) {
 			NgonNgu ngonNgu = repository.findById(id).get();
 			ngonNgu.setId(id);
@@ -186,4 +199,6 @@ public class NgonNguServiceImpl implements NgonNguService {
 			return quocGias;
 		}
 	}
+
+	
 }
